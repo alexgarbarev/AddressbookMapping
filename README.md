@@ -8,13 +8,13 @@ Example of usage:
 
 ```objective-c
 NSDictionary *mappingDictionary = @{
-					@"firstName"  : [AddressbookMappingValue newWithPropertyID:kABPersonFirstNameProperty],
-					@"middleName" : [AddressbookMappingValue newWithPropertyID:kABPersonMiddleNameProperty],
-					@"lastName"   : [AddressbookMappingValue newWithPropertyID:kABPersonLastNameProperty],
-					@"mobile"     : [AddressbookMappingValue newWithPropertyID:kABPersonPhoneProperty andLabel:kABPersonPhoneMobileLabel],
-					@"phone"      : [AddressbookMappingValue newWithPropertyID:kABPersonPhoneProperty andNotLabel:kABPersonPhoneMobileLabel],
-					@"email"      : [AddressbookMappingValue newWithPropertyID:kABPersonEmailProperty]
-					};
+	@"firstName"  : [AddressbookMappingValue newWithPropertyID:kABPersonFirstNameProperty],
+	@"middleName" : [AddressbookMappingValue newWithPropertyID:kABPersonMiddleNameProperty],
+	@"lastName"   : [AddressbookMappingValue newWithPropertyID:kABPersonLastNameProperty],
+	@"mobile"     : [AddressbookMappingValue newWithPropertyID:kABPersonPhoneProperty andLabel:kABPersonPhoneMobileLabel],
+	@"phone"      : [AddressbookMappingValue newWithPropertyID:kABPersonPhoneProperty andNotLabel:kABPersonPhoneMobileLabel],
+	@"email"      : [AddressbookMappingValue newWithPropertyID:kABPersonEmailProperty]
+};
 AddressbookMapping *addressbookMapping = [[AddressbookMapping alloc] initWithMappingDictionary:mappingDictionary];
 
 ABRecordRef recordRef = ...
