@@ -66,28 +66,28 @@
 
 - (NSObject *) valueWithTestBlock:(AddressbookMappingValueTestBlock)testBlock fromMultiValueRef:(ABMultiValueRef)multiValueRef
 {
-    if (!testBlock) {
-        return [self firstValueFromMultiValueRef:multiValueRef];
-    }
-    
     NSObject *resultValue = nil;
-    NSUInteger targetIndex = -1;
+    NSInteger targetIndex = NSNotFound;
     NSUInteger count = ABMultiValueGetCount(multiValueRef);
     
-    for (int i = 0; i < count; i++) {
-        
+    for (int i = 0; i < count; i++)
+    {
         CFStringRef currentLabel = ABMultiValueCopyLabelAtIndex(multiValueRef, i);
-        if (testBlock(currentLabel)) {
-            targetIndex = i;
-            break;
-        }
-        if (currentLabel) {
+        if (currentLabel && testBlock)
+        {
+            BOOL isTargetLabel = testBlock(currentLabel);
+            if (isTargetLabel) {
+                targetIndex = i;
+                break;
+            }
             CFRelease(currentLabel);
         }
     }
     
-    if (targetIndex != -1) {
+    if (targetIndex >= 0 && targetIndex < count) {
         resultValue = (__bridge_transfer NSObject *)ABMultiValueCopyValueAtIndex(multiValueRef, targetIndex);
+    } else {
+        resultValue = [self firstValueFromMultiValueRef:multiValueRef];
     }
     
     return resultValue;

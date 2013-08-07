@@ -10,6 +10,8 @@
 
 @implementation AddressbookMappingValue
 
+BOOL IsStringType(CFStringRef stringRef);
+
 + (id) newWithPropertyID:(ABPropertyID)property
 {
     AddressbookMappingValue *newObject = [AddressbookMappingValue new];
@@ -22,7 +24,11 @@
     AddressbookMappingValue *newObject = [self newWithPropertyID:property];
     if (label != NULL) {
         newObject.multivalueTestBlock = ^(CFStringRef currentLabel){
-            return (BOOL)(CFStringCompare(currentLabel, label, 0) == kCFCompareEqualTo);
+            if (IsStringType(currentLabel)) {
+                return (BOOL)(CFStringCompare(currentLabel, label, 0) == kCFCompareEqualTo);
+            } else {
+                return NO;
+            }
         };
     }
     return newObject;
@@ -33,11 +39,21 @@
     AddressbookMappingValue *newObject = [self newWithPropertyID:property];
     if (label != NULL) {
         newObject.multivalueTestBlock = ^(CFStringRef currentLabel){
-            return (BOOL)(CFStringCompare(currentLabel, label, 0) != kCFCompareEqualTo);
+            if (IsStringType(currentLabel)) {
+                return (BOOL)(CFStringCompare(currentLabel, label, 0) != kCFCompareEqualTo);
+            } else {
+                return NO;
+            }
         };
     }
     return newObject;
 }
+
+BOOL IsStringType(CFStringRef stringRef)
+{
+    return (stringRef != NULL && CFGetTypeID(stringRef) == CFStringGetTypeID());
+}
+
 
 
 @end
